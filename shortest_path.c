@@ -6,7 +6,6 @@
   https://www.tutorialspoint.com/c-cplusplus-program-for-dijkstra-s-shortest-path-algorithm
 
  */
-
 #include <limits.h>
 #include <stdio.h>
 #include <stdbool.h>
@@ -24,19 +23,85 @@ int minDistance(int dist[], bool sptSet[])
    return min_index;
 }
 
-void printSolution(int dist[], int n)
+int flag = 0;
+int printPath(int parent[], int j)
 {
-   printf("Vertex Distance from Source\n");
-
-   for (int i = 0; i < V; i++)
-      printf("%d \t %d\n", i, dist[i]);
+    if (parent[j] == 0){
+	flag = 1;
 }
+
+    if (parent[j] == -1){
+        printf("%d", j);
+
+ 	if (flag == 0){
+       	   printf(" <- %d",  j);
+           return 1;
+        }
+    return 1;
+    }
+
+    printf("%d <- ", j);
+    int count = printPath(parent, parent[j]) + 1;
+    return count;
+}
+
+void printSolution(int dist[], int parent[])
+{
+   printf(" ============================================ \n"
+          "|           Dijkstra's algorithm             |\n"
+          "|        (single-source shortest path)       |\n"
+          "|                                            |\n"
+          "|              Source vertex = 0             |\n"
+          " --------------------------------------------\n"
+          "| Vertex | Distance | Path                   |\n"
+          " --------------------------------------------\n");
+
+   for (int i = 0; i < V; i++) {
+      printf("| %6d | %8d | ", i, dist[i]);
+      int pathLength = printPath(parent, i);
+      if (pathLength < 3){
+//	printf("\t");
+//      printf("|\n");
+//}
+//else
+printf("\t\t     |\n");
+}
+else
+printf("\t     |\n");
+//      printPath(parent, i);
+//      if (strlen(i) > 4)
+//	printf("test");
+//      printf("%*s|\n", 5, "");
+   }
+   printf(" --------------------------------------------\n");
+}
+
+/*
+for (int i = 0; i < V; i++) {
+      printf("| %6d | %8d | ", i, dist[i]);
+      printPath(parent, i);
+      printf("%*s|\n", 15 - (parentCount(i, parent)), "");
+   }
+   printf("--------------------------------------------\n");
+}
+
+int parentCount(int node, int parent[]) {
+    int count = 0;
+    while(parent[node] != -1) {
+        count++;
+        node = parent[node];
+    }
+    return count;
+}
+*/
 
 /* 
    This function just simulates the correct output. It is just here to test the 
    PASS condition in the test script. The actual solution uses variables to set 
    the values to be printed. 
 */
+
+
 void printtestFormat()
 {
    printf(" ============================================\n"); 
@@ -56,49 +121,47 @@ void printtestFormat()
    printf(" --------------------------------------------");
 }
 
-
 void dijkstra(int graph[V][V], int src)
 {
-   int dist[V];
+   int dist[V], parent[V];
    bool sptSet[V];
-   int i;
 
-   for (i = 0; i < V; i++)
+   for (int i = 0; i < V; i++) {
+      parent[i] = -1;
       dist[i] = INT_MAX;
       sptSet[i] = false;
-      dist[src] = 0;
+   }
+   dist[src] = 0;
 
    for (int count = 0; count < V - 1; count++) {
       int u = minDistance(dist, sptSet);
       sptSet[u] = true;
       for (int v = 0; v < V; v++)
          if (!sptSet[v] && graph[u][v] && dist[u] != INT_MAX && dist[u] + graph[u][v] < dist[v])
+         {
+            parent[v] = u;
             dist[v] = dist[u] + graph[u][v];
+         }
    }
 
-   printSolution(dist, V);
-   // printtestFormat();  // This function simulates the correct output (not a solution, of course).
+   printSolution(dist, parent);
 }
+
 int main()
 {
-
    int graph[V][V] = {
-      { 0,  5,  4,  0,  0, 0 },
-      { 5,  0,  6,  3,  0, 0 },
-      { 4,  6,  0, 10,  9, 0 },
-      { 0,  3, 10,  0,  7, 4 },
-      { 0,  0,  9,  7,  0, 8 },
-      { 0,  0,  0,  4,  8, 0 }
+      {0, 5, 4, 0, 0, 0},
+      {5, 0, 6, 3, 0, 0},
+      {4, 6, 0, 10, 9, 0},
+      {0, 3, 10, 0, 7, 4},
+      {0, 0, 9, 7, 0, 8},
+      {0, 0, 0, 4, 8, 0}
    };
-
 
    dijkstra(graph, 0);
 
    return 0;
 }
-
-
-
 
 
 
