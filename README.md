@@ -1,4 +1,5 @@
 # Displaying the shortest paths of the Dijkstra’s algorithm
+![image](https://github.com/eribeiroClassroom/spring2024-display-shortest-paths-jscalzimarti/assets/125903169/a6f84b5a-5c99-40ce-8dc6-f485389470cb)
 
 ## Overview
 
