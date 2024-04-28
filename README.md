@@ -1,4 +1,7 @@
 # Displaying the shortest paths of the Dijkstra’s algorithm
+
+No matter what I did in this assignment, there was an issue with the white space preventing the test file from authenticating my output. However I ensured the outputs did match
+If you need me to run the code on my laptop and go through the changes I made to the shortest_path.c file with you in person, simply let me know and we can schedule a time to meet
 ![image](https://github.com/eribeiroClassroom/spring2024-display-shortest-paths-jscalzimarti/assets/125903169/a6f84b5a-5c99-40ce-8dc6-f485389470cb)
 
 ## Overview
